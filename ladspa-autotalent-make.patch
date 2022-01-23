@@ -1,0 +1,23 @@
+--- autotalent-0.2/Makefile.orig	2012-06-14 02:46:51.000000000 +0200
++++ autotalent-0.2/Makefile	2022-01-23 19:00:59.749713352 +0100
+@@ -33,8 +33,9 @@ INSTALL_PLUGINS_DIR	=	/usr/lib64/ladspa/
+ # GENERAL
+ 
+ CC		=	gcc
+-CFLAGS		=	-I. -O3 -Wall -fomit-frame-pointer -fstrength-reduce -funroll-loops -ffast-math -c -fPIC -DPIC
+-LDFLAGS		=	-nostartfiles -shared -Wl,-Bsymbolic -lc -lm -lrt
++CFLAGS		+=	-I. -Wall -fomit-frame-pointer -fstrength-reduce -funroll-loops -ffast-math -c -fPIC -DPIC
++LDFLAGS		+=	-nostartfiles -shared -Wl,-Bsymbolic
++LIBS		=	-lm -lrt
+ 
+ PLUGINS		=	autotalent.so
+ 
+@@ -44,7 +45,7 @@ all: $(PLUGINS)
+ 
+ autotalent.so: autotalent.c ladspa.h
+ 	$(CC) $(CFLAGS) autotalent.c mayer_fft.c
+-	$(CC) $(LDFLAGS) -o autotalent.so autotalent.o mayer_fft.o
++	$(CC) $(LDFLAGS) -o autotalent.so autotalent.o mayer_fft.o $(LIBS)
+ 
+ # OTHER TARGETS
+ 

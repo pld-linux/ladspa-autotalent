@@ -2,11 +2,12 @@ Summary:	Real-time pitch correction plugin for LADSPA
 Summary(pl.UTF-8):	Wtyczka LADSPA do korekcji wysokości dźwięków w czasie rzeczywistym
 Name:		ladspa-autotalent
 Version:	0.2
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Applications/Sound
 Source0:	http://tombaran.info/autotalent-%{version}.tar.gz
 # Source0-md5:	f59443efc6ce0f4b46be86933db33acd
+Patch0:		%{name}-make.patch
 URL:		http://tombaran.info/autotalent.html
 BuildRequires:	ladspa-devel
 Requires:	ladspa-common
@@ -37,12 +38,13 @@ majorową a minorową lub zmiany stylu muzycznego.
 
 %prep
 %setup -q -n autotalent-%{version}
+%patch0 -p1
 
 %build
+CFLAGS="%{rpmcflags} %{rpmcppflags}" \
+LDFLAGS="%{rpmldflags}" \
 %{__make} \
-	CC="%{__cc}" \
-	CFLAGS="%{rpmcflags} -c -fPIC -DPIC" \
-	LDFLAGS="%{rpmldflags} -nostartfiles -shared -Wl,-Bsymbolic -lc -lm -lrt" \
+	CC="%{__cc}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
