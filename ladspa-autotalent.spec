@@ -38,7 +38,7 @@ majorową a minorową lub zmiany stylu muzycznego.
 
 %prep
 %setup -q -n autotalent-%{version}
-%patch0 -p1
+%patch -P0 -p1
 
 %build
 CFLAGS="%{rpmcflags} %{rpmcppflags}" \
